@@ -7,10 +7,18 @@
 
 
 self.addEventListener('push', function(e) {
-    console.log(e);
-    
+    var body;
+
+    if (e.data) {
+      body = e.data.text();
+    } else {
+      body = 'Push message no payload';
+    }
+
+    console.log(body);
+
     var options = {
-      body: 'This notification was generated from a push!',
+      body: body,
       icon: 'images/example.png',
       vibrate: [100, 50, 100],
       data: {
