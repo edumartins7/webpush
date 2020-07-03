@@ -9,12 +9,13 @@
     <button onclick="subscribe()">subscribe</button>
 
     <script>
-        addEventListener('load', async () => {
-            let sw = await navigator.serviceWorker.register('./sw.js');
 
-            console.log(sw);
-        })
-
+        if('serviceWorker' in navigator) {
+            addEventListener('load', async () => {
+                let sw = await navigator.serviceWorker.register('./sw.js');
+                console.log(sw);
+            })
+        }
         async function subscribe() {
             let sw = await navigator.serviceWorker.ready;
             let push = await sw.pushManager.subscribe({
@@ -23,7 +24,18 @@
             });
 
             console.log(JSON.stringify(push));
+
+            fetch('http://localhost:5080/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(push)
+            });
         }
+
+
+
     </script>
 </body>
 </html>

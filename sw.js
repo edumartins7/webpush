@@ -4,8 +4,6 @@
 //     );
 // });
 
-
-
 self.addEventListener('push', function(e) {
     var body;
 
